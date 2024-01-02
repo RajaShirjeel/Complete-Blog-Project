@@ -13,6 +13,8 @@ from forms import MyForm, RegisterForm, Login, CommentForm
 import datetime
 import secrets
 from sqlalchemy.orm import relationship
+import os
+
 
 
 
@@ -27,7 +29,7 @@ app.secret_key = secret_key
 
 login_manager = LoginManager()
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db")
 db = SQLAlchemy()
 db.init_app(app) 
 login_manager.init_app(app)  
@@ -237,4 +239,4 @@ def log_out():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    app.run(debug=False)
